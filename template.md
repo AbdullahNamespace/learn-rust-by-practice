@@ -1,56 +1,3 @@
-# 🦀 Learn Rust by Practice
-
-## 📖 About | حول المشروع
-
-A collection of Rust programming exercises for learning through practice. Each problem is documented with clear descriptions in both English and Arabic.
-
-مجموعة من تمارين برمجة Rust للتعلم من خلال الممارسة. كل مشكلة موثقة بأوصاف واضحة بالإنجليزية والعربية.
-
----
-
-## 📂 Repository Structure | هيكل المستودع
-
-```
-learn-rust-by-practice/
-├── .gitignore                 # Git ignore file | ملف تجاهل الجيت
-├── README.md                  # Project overview | نظرة عامة على المشروع
-├── template.md                # Problem template | قالب صياغة المشاكل
-└── problems/                  # All problem | جميع المشاكل
-    ├── 1_problem_name.rs
-    ├── 2_problem_name.rs
-    └── ...
-```
-
----
-
-## 🚀 Getting Started | البدء
-
-### Prerequisites | المتطلبات
-
-- Rust installed ([Download](https://www.rust-lang.org/tools/install))
-
-```bash
-rustc --version
-```
-
-### Running a Problem | تشغيل مشكلة
-
-```bash
-# Clone the repository | استنساخ المستودع
-git clone https://github.com/AbdullahNamespace/learn-rust-by-practice.git
-cd learn-rust-by-practice
-
-# Run a specific problem | تشغيل مشكلة محددة
-rustc problems/1_problem_name.rs
-./1_problem_name
-```
-
----
-
-## 📝 Problem Template | قالب المشاكل
-
-All problems follow a consistent format defined in `template.md`:
-
 ```rust
 // ════════════════════════════════════════════════════════════════════════════
 // ## 🔷 Problem {NUMBER}: {problem_name}.rs
@@ -109,10 +56,7 @@ All problems follow a consistent format defined in `template.md`:
 //
 // ────────────────────────────────────────────────────────────────────────────
 
+fn main() {
+    // Your solution here | حلك هنا
+}
 ```
-
-<div align="center">
-
-**Happy Coding! 🦀 | برمجة سعيدة!**
-
-</div>
