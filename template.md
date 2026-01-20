@@ -26,14 +26,17 @@
 // Example 1:
 // Input:  {sample input}
 // Output: {expected output}
+//   Why:    {explanation}
 //
 // Example 2:
 // Input:  {sample input}
 // Output: {expected output}
+//   Why:    {explanation}
 //
 // Example 3 (Edge Case):
 // Input:  {edge case}
 // Output: {expected output}
+//   Why:    {explanation}
 //
 // ────────────────────────────────────────────────────────────────────────────
 
