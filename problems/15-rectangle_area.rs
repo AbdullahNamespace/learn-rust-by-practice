@@ -1,7 +1,7 @@
 // ════════════════════════════════════════════════════════════════════════════
-// ## 🔷 Problem 14: swap_two_numbers.rs
+// ## 🔷 Problem 15: rectangle_area.rs
 // ════════════════════════════════════════════════════════════════════════════
-// **Category:** Variable Manipulation | معالجة المتغيرات
+// **Category:** Basic Math / Geometry | الرياضيات الأساسية / الهندسة
 // **Difficulty:** Easy | سهل
 // **Source:** programmingadvices.com
 // ════════════════════════════════════════════════════════════════════════════
@@ -11,19 +11,17 @@
 // ────────────────────────────────────────────────────────────────────────────
 //
 // EN:
-// Write a program that reads two integer numbers from the user and swaps their
-// values using a temporary variable. The program should read two integers,
-// display the original values before swapping, perform the swap operation using
-// a temporary variable (demonstrating the classic three-way swap algorithm),
-// and then display the swapped values. In Rust, this can be implemented using
-// mutable references or tuple destructuring.
+// Write a program that calculates the area of a rectangle. The program should
+// read the width (A) and length (B) of a rectangle from the user as floating-point
+// numbers, calculate the area using the formula Area = Width × Length, and display
+// the computed area. This demonstrates basic geometric calculations with floating-point
+// arithmetic and proper handling of decimal values.
 //
 // AR:
-// اكتب برنامجًا يقرأ عددين صحيحين من المستخدم ويبدل قيمهما باستخدام متغير مؤقت.
-// يجب على البرنامج قراءة عددين صحيحين، وعرض القيم الأصلية قبل التبديل، وإجراء
-// عملية التبديل باستخدام متغير مؤقت (توضيح خوارزمية التبديل الثلاثية الكلاسيكية)،
-// ثم عرض القيم المبدلة. في Rust، يمكن تنفيذ ذلك باستخدام المراجع القابلة للتعديل
-// أو تفكيك المجموعات الثنائية.
+// اكتب برنامجًا يحسب مساحة المستطيل. يجب على البرنامج قراءة العرض (A) والطول (B)
+// للمستطيل من المستخدم كأرقام عشرية، وحساب المساحة باستخدام الصيغة المساحة = العرض × الطول،
+// وعرض المساحة المحسوبة. هذا يوضح الحسابات الهندسية الأساسية مع العمليات الحسابية
+// العشرية والتعامل الصحيح مع القيم العشرية.
 //
 // ────────────────────────────────────────────────────────────────────────────
 
@@ -32,22 +30,19 @@
 // ────────────────────────────────────────────────────────────────────────────
 //
 // Example 1:
-// Input:  A = 10, B = 20
-// Output: Before swap: Number1 = 10, Number2 = 20
-//         After swap: Number1 = 20, Number2 = 10
-//   Why:    Values successfully swapped using temporary variable
+// Input:  Width = 5.0, Length = 10.0
+// Output: Rectangle Area = 50
+//   Why:    5.0 × 10.0 = 50.0
 //
 // Example 2:
-// Input:  A = 7, B = 7
-// Output: Before swap: Number1 = 7, Number2 = 7
-//         After swap: Number1 = 7, Number2 = 7
-//   Why:    Equal values remain the same after swap
+// Input:  Width = 3.14, Length = 2.5
+// Output: Rectangle Area = 7.85
+//   Why:    3.14 × 2.5 = 7.85
 //
 // Example 3 (Edge Case):
-// Input:  A = -5, B = 10
-// Output: Before swap: Number1 = -5, Number2 = 10
-//         After swap: Number1 = 10, Number2 = -5
-//   Why:    Handles negative numbers correctly
+// Input:  Width = 6.0, Length = 6.0
+// Output: Rectangle Area = 36
+//   Why:    Square is special rectangle, 6 × 6 = 36
 //
 // ────────────────────────────────────────────────────────────────────────────
 
@@ -55,9 +50,9 @@
 // ⚠️ CONSTRAINTS | القيود
 // ────────────────────────────────────────────────────────────────────────────
 //
-// • Numbers can be any valid i32 integers (-2,147,483,648 to 2,147,483,647) | الأعداد يمكن أن تكون أي أعداد صحيحة i32 صالحة
-// • Must use temporary variable for swapping | يجب استخدام متغير مؤقت للتبديل
-// • Display values before and after swap | عرض القيم قبل وبعد التبديل
+// • Dimensions should be positive floating-point numbers (f32 or f64) | الأبعاد يجب أن تكون أرقام عشرية موجبة
+// • Use floating-point arithmetic (f32 or f64) | استخدام الحساب العشري
+// • Formula: Area = Width × Length | الصيغة: المساحة = العرض × الطول
 //
 // ────────────────────────────────────────────────────────────────────────────
 
@@ -65,9 +60,9 @@
 // 🔧 FUNCTION SIGNATURES | توقيعات الدوال
 // ────────────────────────────────────────────────────────────────────────────
 //
-// fn read_numbers() -> (i32, i32)
-// fn swap(a: &mut i32, b: &mut i32)
-// fn print_numbers(label: &str, num1: i32, num2: i32)
+// fn read_dimensions() -> (f32, f32)
+// fn calculate_rectangle_area(width: f32, length: f32) -> f32
+// fn print_result(width: f32, length: f32, area: f32)
 //
 // ────────────────────────────────────────────────────────────────────────────
 
@@ -77,36 +72,45 @@ use std::io::{self, Write};
 //     INPUT FUNCTIONS
 // ======================
 
-fn read_numbers() -> (i32, i32) {
-    let number1 = read_number("enter number 1: ");
-    let number2 = read_number("enter number 2: ");
+fn read_positive_float(prompt: &str) -> f32 {
+    loop {
+        // read_number ترجع f32 مباشرة، لا Result
+        let value = read_number::<f32>(prompt);
 
-    (number1, number2)
+        if value > 0.0 {
+            return value;
+        } else {
+            println!("Error: Must be positive number!");
+            // continue للمحاولة مرة أخرى
+        }
+    }
+}
+
+fn read_dimensions() -> (f32, f32) {
+    let width = read_positive_float("Enter width: ");
+    let length = read_positive_float("Enter length: ");
+
+    (width, length)
 }
 
 // ======================
 //   PROCESSING FUNCTIONS
 // ======================
 
-fn swap(number1: &mut i32, number2: &mut i32) {
-    let temp = *number1;
-    *number1 = *number2;
-    *number2 = temp;
-
-    // التبديل الثاني: باستخدام tuple
-    // (*number1, *number2) = (*number2, *number1);
-    // بديل: تبديل بدون متغير مؤقت (خوارزمية رياضية)
-    // *number1 = *number1 + *number2;
-    // *number2 = *number1 - *number2;
-    // *number1 = *number1 - *number2;
+fn calculate_rectangle_area(width: f32, length: f32) -> f32 {
+    width * length
 }
 
 // ======================
 //     OUTPUT FUNCTIONS
 // ======================
 
-fn print_values(label: &str, num1: i32, num2: i32) {
-    println!("{} : Number1 = {}, Number2 = {}", label, num1, num2);
+fn print_result(width: f32, length: f32) {
+    let area = calculate_rectangle_area(width, length);
+    println!("\n=== Rectangle Information ===");
+    println!("Width:  {}", width);
+    println!("Length: {}", length);
+    println!("Area:   {}", area);
 }
 
 // ======================
@@ -114,13 +118,8 @@ fn print_values(label: &str, num1: i32, num2: i32) {
 // ======================
 
 fn main() {
-    let (mut number1, mut number2) = read_numbers();
-
-    print_values("Before swap", number1, number2);
-
-    swap(&mut number1, &mut number2);
-
-    print_values("After swap", number1, number2);
+    let (width, length) = read_dimensions();
+    print_result(width, length);
 }
 
 // ======================
@@ -142,7 +141,7 @@ fn read_number<T: std::str::FromStr>(prompt: &str) -> T {
         let input = match read_string(prompt) {
             Ok(value) => value,
             Err(_) => {
-                println!("Invalid input. Please enter a valid integer.");
+                println!("invalid input, please enter integer number!");
                 continue;
             }
         };
@@ -150,7 +149,7 @@ fn read_number<T: std::str::FromStr>(prompt: &str) -> T {
         match input.trim().parse() {
             Ok(value) => return value,
             Err(_) => {
-                println!("Invalid input. Please enter a valid integer.");
+                println!("invalid input, please enter integer number!");
             }
         }
     }
